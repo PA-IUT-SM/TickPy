@@ -1,6 +1,6 @@
 # TickPy : Gestion du service informatique
 ## Projet Team
-Pière, Alexandre, Erwan
+Pierre, Alexandre, Erwan
 
 ## Description du projet
 Vous êtes amené à créer en python un logiciel pour la gestion du service informatique.
