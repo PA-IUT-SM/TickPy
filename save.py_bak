@@ -1,0 +1,59 @@
+----------------------- DB INIT -------------------------
+#coding:utf-8
+import names, sqlite3, hashlib
+
+connection = sqlite3.connect('bdd/tickPy.db')
+cursor = connection.cursor()
+
+password = "aa123!"
+
+def fuller(id, role):
+    firtname = names.get_first_name()
+    lastname = names.get_last_name()
+    pseudo = firtname + '.' + lastname
+    new_user = (id, firtname, lastname, pseudo.lower(), role, hasher_password)
+    return new_user
+
+def password_hasher(password):
+    return hashlib.md5(password.encode()).hexdigest()
+
+hasher_password = password_hasher(password)
+
+
+print(cursor.execute('SELECT * FROM tickPy_users').fetchall())
+
+
+for x in range(5): 
+    y = x+2
+    user = fuller(y, 'alternant')  
+    cursor.execute('INSERT INTO tickPy_users VALUES(?,?,?,?,?,?)', user)
+for x in range(5): 
+    y = x+2+5
+    cursor.execute('INSERT INTO tickPy_users VALUES(?,?,?,?,?,?)', fuller(y, 'technicien'))
+for x in range(5): 
+    y = x+2+5+5
+    cursor.execute('INSERT INTO tickPy_users VALUES(?,?,?,?,?,?)', fuller(y,'chef_de_service'))
+for x in range(5): 
+    y = x+2+5+5+5
+    cursor.execute('INSERT INTO tickPy_users VALUES(?,?,?,?,?,?)', fuller(y,'rh'))
+for x in range(5): 
+    y = x+2+5+5+5+5    
+    cursor.execute('INSERT INTO tickPy_users VALUES(?,?,?,?,?,?)', fuller(y,'admin'))
+
+connection.commit()
+connection.close()
+
+
+
+
+-------------------------- ERROR ----------------------------
+try:
+    connection = sqlite3.connect('bdd/tickPy.db')
+    cursor = connection.cursor()
+    cursor.execute('INSERT INTO tickPy_users VALUES(?,?,?,?,?,?)', user)
+except Exception as e:
+    print('[ERROR]', e)
+    connection.rollback()
+finally :
+    connection.close()
+    
